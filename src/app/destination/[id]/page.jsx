@@ -1,3 +1,4 @@
+import { EditModal } from "@/components/EditModal";
 import { Button } from "@heroui/react";
 import Image from "next/image";
 import { FaEdit } from "react-icons/fa";
@@ -18,7 +19,7 @@ const DestinationPageDetails = async ({ params }) => {
 
   return (
     <div className="container mx-auto">
-      <div className="flex justify-between">
+      <div className="flex justify-between p-5">
         <div>
           <Button variant="ghost" className={""}>
             <GoArrowLeft className="" />
@@ -27,10 +28,7 @@ const DestinationPageDetails = async ({ params }) => {
         </div>
 
         <div className="flex gap-3">
-          <Button variant="ghost" className={"border border-black rounded-sm"}>
-            <FaEdit />
-            Exit
-          </Button>
+          <EditModal destination={destination}/>
           <Button
             variant="ghost"
             className={"border border-red-600 text-red-600 rounded-sm"}
@@ -45,7 +43,7 @@ const DestinationPageDetails = async ({ params }) => {
         src={imageUrl}
         width={500}
         height={800}
-        className="block mx-auto"
+        className="block mx-auto w-200 object-cover"
       />
 
       <div>
