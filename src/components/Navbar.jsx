@@ -12,6 +12,10 @@ const Navbar = () => {
   const user = session?.user;
   console.log(user);
 
+  const handleSignOut = async() => {
+    await authClient.signOut();
+  }
+
   return (
     <nav className="bg-gray-100 p-5">
       <div className="flex justify-between container mx-auto items-center">
@@ -56,7 +60,7 @@ const Navbar = () => {
                 </Avatar>
               </li>
               <li>
-                <Button variant="danger" className={"rounded-none"}>Logout</Button>
+                <Button onClick={handleSignOut} variant="danger" className={"rounded-none"}>Logout</Button>
               </li>
             </>
           ) : (

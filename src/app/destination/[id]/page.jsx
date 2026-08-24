@@ -1,3 +1,4 @@
+import BookingCard from "@/components/BookingCard";
 import { DeleteAlert } from "@/components/DeleteAlert";
 import { EditModal } from "@/components/EditModal";
 import { Button } from "@heroui/react";
@@ -54,6 +55,10 @@ const DestinationPageDetails = async ({ params }) => {
             <span>{duration}</span>
           </div>
         </div>
+      </div>
+
+      <div>
+        <BookingCard destination={destination}/>
       </div>
     </div>
   );

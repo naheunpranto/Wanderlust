@@ -10,6 +10,7 @@ import {
   Form,
   Input,
   Label,
+  Separator,
   TextField,
 } from "@heroui/react";
 import { redirect } from "next/navigation";
@@ -31,17 +32,23 @@ const SignUpPage = () => {
       image: user.image,
     });
 
-    if(data){
-        redirect("/")
+    if (data) {
+      redirect("/");
     }
 
-    if(error){
-        // toast
-        alert("Error")
+    if (error) {
+      // toast
+      alert("Error");
     }
 
-    console.log({data, error});
+    console.log({ data, error });
   };
+
+  const handleGoogleSignin = async() => {
+    const data = await authClient.signIn.social({
+    provider: "google",
+  });
+  }
 
   return (
     <div className="flex items-center justify-center p-4 min-h-[80vh]">
@@ -109,6 +116,19 @@ const SignUpPage = () => {
             </Button>
           </div>
         </Form>
+
+        <div className="flex items-center justify-center">
+          <Separator/>
+            <div className="whitespace-nowrap">
+              Or sign in with
+            </div>
+          <Separator/>
+        </div>
+
+        <div>
+          <Button onClick={handleGoogleSignin} className={"w-full rounded-none"}>Sign in with Google</Button>
+        </div>
+        
       </Card>
     </div>
   );
