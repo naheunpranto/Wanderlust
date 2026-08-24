@@ -1,10 +1,44 @@
-'use client'
+"use client";
 
+import { authClient } from "@/lib/auth-client";
 import { Button, Card, DateField, Label } from "@heroui/react";
-import React from "react";
+import React, { useState } from "react";
 
 const BookingCard = ({ destination }) => {
-  const { price } = destination;
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+
+  const [departureDate, setDepartureDate] = useState(null);
+  console.log(departureDate);
+
+  const { _id, price, destinationName, country, imageUrl } = destination;
+
+  const handleBooking = async () => {
+    const bookingData = {
+        userId: user.id,
+        userImage: user.image,
+        userName: user.name,
+        destinationId: _id,
+        destinationName,
+        price,
+        country,
+        imageUrl,
+        departureDate: new Date(departureDate)
+    }
+    
+    const res = await fetch("http://localhost:5000/booking", {
+        method: "POST",
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(bookingData)
+    })
+
+    const data = await res.json();
+
+    console.log(data);
+  }
+
 
   return (
     <Card className="border rounded-none mt-5 mb-5">
@@ -12,7 +46,7 @@ const BookingCard = ({ destination }) => {
       <h2>${price}</h2>
       <p>per person</p>
 
-      <DateField className="w-[256px]" name="date">
+      <DateField onChange={setDepartureDate} className="w-[256px]" name="date">
         <Label>Departure Date</Label>
         <DateField.Group>
           <DateField.Input>
@@ -21,7 +55,7 @@ const BookingCard = ({ destination }) => {
         </DateField.Group>
       </DateField>
 
-      <Button>Book Now</Button>
+      <Button onClick={handleBooking}>Book Now</Button>
     </Card>
   );
 };
